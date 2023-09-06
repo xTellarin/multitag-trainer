@@ -24,7 +24,7 @@ nb_items = len(os.listdir(training_folder))
 print('Reading from: ' + training_folder)
 print('Found ' + str(nb_items) + ' items in the training directory.')
 if nb_items % 2 != 0:
-    print('An odd number of items were detected. Make sure you have 1 tag file for 1 image!')
+    print('An odd number of items was detected. Make sure you have 1 tag file for 1 image!')
     if sys.platform == 'darwin':
         print('This error may be caused by the presence of a .DS_Store file in your folder. Check with "ls -a | grep .DS_Store" to confirm.\n')
 
@@ -47,7 +47,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Hyperparameters
 num_epochs = 10
-batch_size = 256
+batch_size = 32
 
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
@@ -186,7 +186,7 @@ for epoch in range(num_epochs):
     val_loss = running_loss / len(val_loader.dataset) # Average loss in one epoch
 
     print(f'Epoch {epoch+1}/{num_epochs}:')
-    print('Training Loss: {:.6f} \tValidation Loss: {:.6f}'.format(epoch+1, epoch_loss, val_loss))
+    print('Training Loss: {:.6f} \tValidation Loss: {:.6f}'.format(epoch_loss, val_loss))
     print(f'TP={true_positive} \tFP={false_positive} \tFN={false_negative} \tTN={true_negative}')
 
     # Save the model with the best-validation-loss weights (overwrites previous best model)
